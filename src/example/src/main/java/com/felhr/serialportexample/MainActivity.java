@@ -1,15 +1,18 @@
 package com.felhr.serialportexample;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -22,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -55,13 +60,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
     private UsbService usbService;
-    private TextView display;
+    private TextView gpsLock,display;
     private EditText editText;
     private ListView msgList;
     private MyHandler mHandler;
     private List<String> prevMsg = new ArrayList<String>();
     private ArrayAdapter<String> msgAdapter;
+    private BeaconState state = new BeaconState();
+
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName arg0, IBinder arg1) {
@@ -170,7 +178,31 @@ public class MainActivity extends AppCompatActivity {
             switch (msg.what) {
                 case UsbService.MESSAGE_FROM_SERIAL_PORT:
                     String data = (String) msg.obj;
-                    mActivity.get().display.append(data);
+                    String toastMsg = "No message";
+                    MainActivity main = mActivity.get();
+                    main.gpsLock = (TextView) main.findViewById(R.id.textViewLock);
+                    main.display.append(data);//updates the text box with latest serial data
+                    try{
+                        String BeaconData[] = data.split(",",-1);
+                        main.state.setM_fix(Integer.parseInt(BeaconData[BeaconData.length-1]));
+                        if(main.state.getM_fix()>0){
+                            main.gpsLock.setText("good GPS Lock");
+                            main.gpsLock.setTextColor(Color.parseColor("#77b800"));
+                        }
+                        else{
+                            main.gpsLock.setText("no GPS Lock");
+                            main.gpsLock.setTextColor(Color.parseColor("#c90000"));
+                        }
+                        toastMsg = BeaconData[BeaconData.length-1];
+                    }catch (Exception e){
+                        toastMsg = data + " is the message. " + e.toString() + "is the error.";
+                    }
+
+                    Toast toast = Toast.makeText(main.getApplicationContext(),
+                            toastMsg,
+                            Toast.LENGTH_SHORT);
+
+                    //toast.show();
                     break;
             }
         }
