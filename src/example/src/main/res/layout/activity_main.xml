@@ -19,14 +19,22 @@
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewRecentMsg"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="20dp"
         android:layout_centerHorizontal="true"
         android:gravity="bottom"
-        android:layout_marginTop="34dp"
-        android:background="#FFFFFF"/>
+        android:layout_marginTop="34dp"/>
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="bottom"
+        android:layout_below="@+id/textViewRecentMsg"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"/>
 
     <EditText
         android:id="@+id/editText1"
@@ -35,8 +43,8 @@
         android:layout_below="@+id/textView1"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="max 160 characters"
-        android:maxLength="160">
+        android:hint="max 40 characters"
+        android:maxLength="40">
 
         <requestFocus />
     </EditText>
@@ -50,6 +58,7 @@
         android:layout_alignBottom="@+id/editText1"
         android:layout_marginTop="42dp"
         android:text="Send"/>
+
 
     <ListView
         android:id="@+id/previousMessage"

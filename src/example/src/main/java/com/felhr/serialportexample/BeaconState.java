@@ -1,6 +1,10 @@
 package com.felhr.serialportexample;
 
 public class BeaconState {
+    private String m_id;
+    private String m_name;
+    private int m_age;
+    private String m_gender;
     private String m_gpsTime;
     private String m_gpsDate;
     private int m_fix;
@@ -9,6 +13,22 @@ public class BeaconState {
     private float m_latitude;
     private float m_longitude;
     private float m_altitude;
+
+    public String getM_id() { return m_id; }
+
+    public void setM_id(String p_id) { this.m_id = p_id;}
+
+    public String getM_name() { return m_name; }
+
+    public void setM_name(String p_name) { this.m_name = p_name; }
+
+    public int getM_age() { return m_age;}
+
+    public void setM_age(int p_age) { this.m_age = p_age;}
+
+    public String getM_gender() { return m_gender;}
+
+    public void setM_gender(String p_gender) { this.m_gender = p_gender;}
 
     public String getM_gpsTime() {
         return m_gpsTime;

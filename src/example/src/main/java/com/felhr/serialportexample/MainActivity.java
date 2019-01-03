@@ -7,11 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
@@ -62,13 +64,14 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private UsbService usbService;
-    private TextView gpsLock,display;
+    private TextView gpsLock,msg,display;
     private EditText editText;
     private ListView msgList;
     private MyHandler mHandler;
     private List<String> prevMsg = new ArrayList<String>();
     private ArrayAdapter<String> msgAdapter;
     private BeaconState state = new BeaconState();
+
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
         @Override
@@ -98,12 +101,16 @@ public class MainActivity extends AppCompatActivity {
         display.setMovementMethod(new ScrollingMovementMethod());
         msgList.setAdapter(msgAdapter);
         msgAdapter.notifyDataSetChanged();
+        final SharedPreferences sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
         Button sendButton = (Button) findViewById(R.id.buttonSend);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!editText.getText().toString().equals("")) {
-                    String data = editText.getText().toString();
+                    state.setM_message(sharedpref.getString(getString(R.string.name),""));
+                    state.setM_age(sharedpref.getInt(getString(R.string.age),0));
+                    state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
+                    String data = state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+editText.getText().toString();
                     if (usbService != null) { // if UsbService was correctly binded, Send data
                         prevMsg.add(data);
                         usbService.write(data.getBytes());
@@ -114,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
     private void closeKeyboard(){
         View view = this.getCurrentFocus();
@@ -163,6 +171,10 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(mUsbReceiver, filter);
     }
 
+    public static String getDefaults(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, null);
+    }
     /*
      * This handler will be passed to UsbService. Data received from serial port is displayed through this handler
      */
@@ -180,17 +192,21 @@ public class MainActivity extends AppCompatActivity {
                     String data = (String) msg.obj;
                     String toastMsg = "No message";
                     MainActivity main = mActivity.get();
+                    main.msg = (TextView) main.findViewById(R.id.textViewRecentMsg);
                     main.gpsLock = (TextView) main.findViewById(R.id.textViewLock);
                     main.display.append(data);//updates the text box with latest serial data
                     try{
                         String BeaconData[] = data.split(",",-1);
-                        main.state.setM_fix(Integer.parseInt(BeaconData[BeaconData.length-1]));
+                        main.state.setM_message(BeaconData[BeaconData.length-1]);
+                        main.state.setM_fix(Integer.parseInt(BeaconData[BeaconData.length-2]));
                         if(main.state.getM_fix()>0){
+                            main.msg.setText("Recent: "+main.state.getM_message());
                             main.gpsLock.setText("good GPS Lock");
                             main.gpsLock.setTextColor(Color.parseColor("#77b800"));
                         }
                         else{
-                            main.gpsLock.setText("no GPS Lock");
+                            main.msg.setText("no message");
+                            main.gpsLock.setText("no GPS Lock, Go out!");
                             main.gpsLock.setTextColor(Color.parseColor("#c90000"));
                         }
                         toastMsg = BeaconData[BeaconData.length-1];
