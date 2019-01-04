@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".USER_info">
+    tools:context="com.aic.beacondetails.USER_info">
 
     <Button
         android:layout_width="wrap_content"

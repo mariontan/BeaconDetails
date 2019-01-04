@@ -1,4 +1,4 @@
-package com.felhr.serialportexample;
+package com.aic.beacondetails;
 
 public class BeaconState {
     private String m_id;

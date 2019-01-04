@@ -7,9 +7,9 @@
     <string name="serial_port">Serial Port</string>
     <string name="title_activity_user_info">USER_info</string>
     <!--keys for shared prefs-->
-    <string name="BD">com.felhr.serialportexample.bd</string>
-    <string name="name">com.felhr.serialportexample.name</string>
-    <string name="age">com.felhr.serialportexample.age</string>
-    <string name="gender">com.felhr.serialportexample.gender</string>
+    <string name="BD">com.aic.beacondetails.bd</string>
+    <string name="name">com.aic.beacondetails.name</string>
+    <string name="age">com.aic.beacondetails.age</string>
+    <string name="gender">com.aic.beacondetails.gender</string>
 
 </resources>
