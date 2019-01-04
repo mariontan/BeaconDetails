@@ -107,10 +107,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!editText.getText().toString().equals("")) {
+                    state.setM_id(sharedpref.getString(getString(R.string.BD),""));
                     state.setM_message(sharedpref.getString(getString(R.string.name),""));
                     state.setM_age(sharedpref.getInt(getString(R.string.age),0));
                     state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
-                    String data = state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+editText.getText().toString();
+                    String data =state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+editText.getText().toString();
                     if (usbService != null) { // if UsbService was correctly binded, Send data
                         prevMsg.add(data);
                         usbService.write(data.getBytes());
@@ -192,9 +193,11 @@ public class MainActivity extends AppCompatActivity {
                     String data = (String) msg.obj;
                     String toastMsg = "No message";
                     MainActivity main = mActivity.get();
+                    //updating message
                     main.msg = (TextView) main.findViewById(R.id.textViewRecentMsg);
                     main.gpsLock = (TextView) main.findViewById(R.id.textViewLock);
                     main.display.append(data);//updates the text box with latest serial data
+
                     try{
                         String BeaconData[] = data.split(",",-1);
                         main.state.setM_message(BeaconData[BeaconData.length-1]);

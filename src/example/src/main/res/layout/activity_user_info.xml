@@ -16,14 +16,20 @@
         android:layout_marginTop="30dp"
         android:onClick="readSerial"/>
 
-    <TextView
+   <EditText
         android:layout_below="@id/buttonReadSerial"
-        android:id="@+id/textViewID"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextBD"
+        android:layout_marginTop="5dp"
+        android:hint="Birthday(YYYYMMDD)"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:layout_below="@id/textViewID"
+        android:layout_below="@id/editTextBD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextName"
@@ -66,24 +72,6 @@
         android:onClick="save"
         android:layout_marginTop="30dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear"
-        android:id="@+id/btnClear"
-        android:layout_below="@+id/editTextAge"
-        android:layout_centerHorizontal="true"
-        android:onClick="clear"
-        android:layout_marginTop="30dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show"
-        android:id="@+id/btnShow"
-        android:layout_below="@+id/editTextAge"
-        android:layout_alignParentRight="true"
-        android:onClick="show"
-        android:layout_marginTop="30dp" />
 
 </RelativeLayout>
