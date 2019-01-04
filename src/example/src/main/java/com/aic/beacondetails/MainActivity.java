@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private UsbService usbService;
-    private TextView gpsLock,msg,display;
+    private TextView gpsLock,msg,display,time,date,lat,lon;
     private EditText editText;
     private ListView msgList;
     private MyHandler mHandler;
@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
         mHandler = new MyHandler(this);
 
         display = (TextView) findViewById(R.id.textView1);
+        time = (TextView) findViewById(R.id.textViewTime);
+        date = (TextView) findViewById(R.id.textViewDate);
+        lat = (TextView) findViewById(R.id.textViewLat);
+        lon = (TextView) findViewById(R.id.textViewLon);
         editText = (EditText) findViewById(R.id.editText1);
         msgList = (ListView) findViewById(R.id.previousMessage);
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
@@ -196,16 +200,29 @@ public class MainActivity extends AppCompatActivity {
                         String BeaconData[] = data.split(",",-1);
                         main.state.setM_message(BeaconData[BeaconData.length-1]);
                         main.state.setM_fix(Integer.parseInt(BeaconData[BeaconData.length-2]));
+                        main.state.setM_gpsTime(BeaconData[3]+":"+BeaconData[4]+":"+BeaconData[5]);
+                        main.state.setM_gpsDate(BeaconData[1]+"/"+BeaconData[2]+"/"+BeaconData[0]);
+                        main.state.setM_latitude(Float.parseFloat(BeaconData[6]));
+                        main.state.setM_longitude(Float.parseFloat(BeaconData[7]));
                         if(main.state.getM_fix()>0){
                             main.msg.setText("Recent: "+main.state.getM_message());
                             main.gpsLock.setText("good GPS Lock");
                             main.gpsLock.setTextColor(Color.parseColor("#77b800"));
+                            main.time.setText(main.state.getM_gpsTime());
+                            main.date.setText(main.state.getM_gpsDate());
+                            main.lat.setText(String.valueOf(main.state.getM_latitude()));
+                            main.lon.setText(String.valueOf(main.state.getM_longitude()));
                         }
                         else{
                             main.msg.setText("no message");
                             main.gpsLock.setText("no GPS Lock, Go out!");
                             main.gpsLock.setTextColor(Color.parseColor("#c90000"));
+                            main.time.setText("no gps Time");
+                            main.date.setText("no date");
+                            main.lat.setText("GPS");
+                            main.lon.setText("no GPS");
                         }
+
                         toastMsg = BeaconData[BeaconData.length-1];
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
