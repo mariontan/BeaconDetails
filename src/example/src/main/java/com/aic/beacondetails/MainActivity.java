@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> prevMsg = new ArrayList<String>();
     private ArrayAdapter<String> msgAdapter;
     private BeaconState state = new BeaconState();
+    BeaconView beaconView = new BeaconView();
 
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
@@ -86,17 +87,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHandler = new MyHandler(this);
-
-        display = (TextView) findViewById(R.id.textView1);
+        beaconView.setView(this, R.id.textView1,R.id.textViewTime, R.id.textViewDate, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock);
+        /*display = (TextView) findViewById(R.id.textView1);
         time = (TextView) findViewById(R.id.textViewTime);
         date = (TextView) findViewById(R.id.textViewDate);
         lat = (TextView) findViewById(R.id.textViewLat);
-        lon = (TextView) findViewById(R.id.textViewLon);
+        lon = (TextView) findViewById(R.id.textViewLon);*/
         editText = (EditText) findViewById(R.id.editText1);
+
         msgList = (ListView) findViewById(R.id.previousMessage);
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
 
-        display.setMovementMethod(new ScrollingMovementMethod());
+        //beaconView.display.setMovementMethod(new ScrollingMovementMethod());
         msgList.setAdapter(msgAdapter);
         msgAdapter.notifyDataSetChanged();
         final SharedPreferences sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -177,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     /*
      * This handler will be passed to UsbService. Data received from serial port is displayed through this handler
      */
-    private static class MyHandler extends Handler {
+    private class MyHandler extends Handler {
         private final WeakReference<MainActivity> mActivity;
 
         public MyHandler(MainActivity activity) {
@@ -192,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
                     String toastMsg = "No message";
                     MainActivity main = mActivity.get();
                     //updating message
-                    main.msg = (TextView) main.findViewById(R.id.textViewRecentMsg);
-                    main.gpsLock = (TextView) main.findViewById(R.id.textViewLock);
-                    main.display.append(data);//updates the text box with latest serial data
+                    //main.msg = (TextView) main.findViewById(R.id.textViewRecentMsg);
+                    //main.gpsLock = (TextView) main.findViewById(R.id.textViewLock);
+                    main.beaconView.display.append(data);//updates the text box with latest serial data
 
                     try{
                         String BeaconData[] = data.split(",",-1);
@@ -204,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
                         main.state.setM_gpsDate(BeaconData[1]+"/"+BeaconData[2]+"/"+BeaconData[0]);
                         main.state.setM_latitude(Float.parseFloat(BeaconData[6]));
                         main.state.setM_longitude(Float.parseFloat(BeaconData[7]));
-                        if(main.state.getM_fix()>0){
+                        beaconView.SetGPSLock(main.state.getM_fix(),main.state.getM_message(), main.state.getM_gpsTime(),main.state.getM_gpsDate(),main.state.getM_latitude(), main.state.getM_longitude());
+                        /*if(main.state.getM_fix()>0){
                             main.msg.setText("Recent: "+main.state.getM_message());
                             main.gpsLock.setText("good GPS Lock");
                             main.gpsLock.setTextColor(Color.parseColor("#77b800"));
@@ -221,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                             main.date.setText("no date");
                             main.lat.setText("GPS");
                             main.lon.setText("no GPS");
-                        }
+                        }*/
 
                         toastMsg = BeaconData[BeaconData.length-1];
                     }catch (Exception e){
@@ -232,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
                             toastMsg,
                             Toast.LENGTH_SHORT);
 
-                    //toast.show();
+                    toast.show();
                     break;
             }
         }
