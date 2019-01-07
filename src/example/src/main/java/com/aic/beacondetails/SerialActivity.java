@@ -199,21 +199,7 @@ public class SerialActivity extends AppCompatActivity {
                         state.setBeaconAttributes(BeaconData);
 
                         getBeaconData();
-                        //convert coordinates
-                        /*int latdeg, longdeg;
-                        float latmin, longmin;
 
-                        latdeg = (int) state.getM_latitude()/100;
-                        latmin = state.getM_latitude() - latdeg*100;
-                        longdeg =(int) state.getM_longitude()/100;
-                        longmin = state.getM_longitude() - longdeg*100;
-
-                        if(state.getM_fix() > 0) {
-                            beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
-                                    String.valueOf(latdeg)+" "+String.valueOf(latmin), String.valueOf(longdeg)+" "+String.valueOf(longmin));
-                        } else {
-                            beaconView.SetNoGPSLock();
-                        }*/
                         toastMsg = BeaconData[BeaconData.length-1];
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
@@ -228,21 +214,20 @@ public class SerialActivity extends AppCompatActivity {
             }
         }
         private void getBeaconData(){
-            int latdeg, longdeg;
-            float latmin, longmin;
-
-            latdeg = (int) state.getM_latitude()/100;
-            latmin = state.getM_latitude() - latdeg*100;
-            longdeg =(int) state.getM_longitude()/100;
-            longmin = state.getM_longitude() - longdeg*100;
 
             if(state.getM_fix() > 0) {
                 beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
-                        String.valueOf(latdeg)+" "+String.valueOf(latmin), String.valueOf(longdeg)+" "+String.valueOf(longmin));
+                       RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
             } else {
                 beaconView.SetNoGPSLock();
             }
 
+        }
+
+        private String RawToDegMin(float degrees) {
+            int deg = (int) degrees/100;
+            float min = degrees - deg*100;
+            return String.valueOf(deg)+" "+String.valueOf(min);
         }
 
         private String  setCorrectTimezone(String dateTime){
