@@ -93,4 +93,15 @@ public class BeaconState {
     public void setM_altitude(float p_altitude) {
         this.m_altitude = p_altitude;
     }
+
+
+
+    public void setBeaconAttributes(String[] BeaconData){
+        setM_message(BeaconData[BeaconData.length-1]);
+        setM_fix(Integer.parseInt(BeaconData[BeaconData.length-2]));
+        setM_gpsTime(BeaconData[3]+":"+BeaconData[4]+":"+BeaconData[5]);
+        setM_gpsDate(BeaconData[1]+"/"+BeaconData[2]+"/"+BeaconData[0]);
+        setM_latitude(Float.parseFloat(BeaconData[6]));
+        setM_longitude(Float.parseFloat(BeaconData[7]));
+    }
 }

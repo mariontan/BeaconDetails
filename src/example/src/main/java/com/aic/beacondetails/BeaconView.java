@@ -7,18 +7,20 @@ import android.widget.TextView;
 
 public class BeaconView {
 
-    private TextView gpsLock,msg,time,date,lat,lon;
-    protected TextView display;
+    private TextView gpsLock,msg,dateTime,lat,lon;
+    //protected TextView display;
     protected EditText editTextMSG;
 
-    public BeaconView(){
+    public BeaconView() {
 
     }
 
-    public void setView(Activity activity, int displayID, int timeID, int dateID, int latID, int longID, int msgID,int gpsLockID, int editTxtMsgID) {
-        display = (TextView) activity.findViewById(displayID);
-        time = (TextView) activity.findViewById(timeID);
-        date = (TextView) activity.findViewById(dateID);
+    public BeaconView(Activity activity, int dateTimeID, int latID, int longID, int msgID, int gpsLockID, int editTxtMsgID) {
+        InitializeView(activity, dateTimeID, latID, longID, msgID, gpsLockID, editTxtMsgID);
+    }
+
+    public void InitializeView(Activity activity, int dateTimeID, int latID, int longID, int msgID, int gpsLockID, int editTxtMsgID) {
+        dateTime = (TextView) activity.findViewById(dateTimeID);
         lat = (TextView) activity.findViewById(latID);
         lon = (TextView) activity.findViewById(longID);
         msg = (TextView) activity.findViewById(msgID);
@@ -26,26 +28,23 @@ public class BeaconView {
         editTextMSG = (EditText) activity.findViewById(editTxtMsgID);
     }
 
-    public void SetGPSLock(int gpsLocked, String message, String gpsTime, String gpsDate, float lattd, float longh) {
+    public void SetGPSLock(String message, String gpsDatetime, float lattd, float longh) {
 
-        if(gpsLocked>0){
             msg.setText("Recent: " + message);
             gpsLock.setText("good GPS Lock");
             gpsLock.setTextColor(Color.parseColor("#77b800"));
-            time.setText(gpsTime);
-            date.setText(gpsDate);
+            dateTime.setText(gpsDatetime);
             lat.setText(String.valueOf(lattd));
             lon.setText(String.valueOf(longh));
-        }
-        else{
-            msg.setText("no message");
-            gpsLock.setText("no GPS Lock, Go out!");
-            gpsLock.setTextColor(Color.parseColor("#c90000"));
-            time.setText("no gps Time");
-            date.setText("no date");
-            lat.setText("GPS");
-            lon.setText("no GPS");
-        }
+    }
+
+    public void SetNoGPSLock() {
+        msg.setText("no message");
+        gpsLock.setText("no GPS Lock, Go out!");
+        gpsLock.setTextColor(Color.parseColor("#c90000"));
+        dateTime.setText("no date");
+        lat.setText("GPS");
+        lon.setText("no GPS");
     }
 
 }

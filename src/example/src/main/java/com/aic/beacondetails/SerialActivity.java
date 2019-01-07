@@ -1,5 +1,6 @@
 package com.aic.beacondetails;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,9 +22,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 public class SerialActivity extends AppCompatActivity {
 
@@ -59,7 +64,7 @@ public class SerialActivity extends AppCompatActivity {
     private List<String> prevMsg = new ArrayList<String>();
     private ArrayAdapter<String> msgAdapter;
     private BeaconState state = new BeaconState();
-    BeaconView beaconView = new BeaconView();
+    private BeaconView beaconView;// = new BeaconView();
 
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
@@ -81,10 +86,9 @@ public class SerialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_serial);
 
         mHandler = new MyHandler(this);
-        beaconView.setView(this, R.id.textView1,R.id.textViewTime, R.id.textViewDate, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
-
-        msgList = (ListView) findViewById(R.id.previousMessage);
-        msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
+        //beaconView = new BeaconView(this);
+        //beaconView.InitializeView(this, R.id.textView1,R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
+        InitializeAllViews();
 
         //beaconView.display.setMovementMethod(new ScrollingMovementMethod());
         msgList.setAdapter(msgAdapter);
@@ -95,24 +99,35 @@ public class SerialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!beaconView.editTextMSG.getText().toString().equals("")) {
-                    state.setM_id(sharedpref.getString(getString(R.string.BD),""));
-                    state.setM_message(sharedpref.getString(getString(R.string.name),""));
-                    state.setM_age(sharedpref.getInt(getString(R.string.age),0));
-                    state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
+                    GetSharedPref(sharedpref);
                     String data =state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+beaconView.editTextMSG.getText().toString();
                     if (usbService != null) { // if UsbService was correctly binded, Send data
                         prevMsg.add(data);
                         usbService.write(data.getBytes());
                         msgAdapter.notifyDataSetChanged();
                         beaconView.editTextMSG.setText("");
-                        closeKeyboard();
+                        CloseKeyboard();
                     }
                 }
             }
         });
 
     }
-    private void closeKeyboard(){
+
+    private void InitializeAllViews(){
+        beaconView = new BeaconView(this, R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
+        msgList = (ListView) findViewById(R.id.previousMessage);
+        msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
+    }
+
+    private void GetSharedPref(SharedPreferences sharedpref){
+        state.setM_id(sharedpref.getString(getString(R.string.BD),""));
+        state.setM_message(sharedpref.getString(getString(R.string.name),""));
+        state.setM_age(sharedpref.getInt(getString(R.string.age),0));
+        state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
+    }
+
+    private void CloseKeyboard(){
         View view = this.getCurrentFocus();
         if(view !=null){
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -184,14 +199,13 @@ public class SerialActivity extends AppCompatActivity {
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
                     try{
                         String BeaconData[] = data.split(",",-1);
-                        main.state.setM_message(BeaconData[BeaconData.length-1]);
-                        main.state.setM_fix(Integer.parseInt(BeaconData[BeaconData.length-2]));
-                        main.state.setM_gpsTime(BeaconData[3]+":"+BeaconData[4]+":"+BeaconData[5]);
-                        main.state.setM_gpsDate(BeaconData[1]+"/"+BeaconData[2]+"/"+BeaconData[0]);
-                        main.state.setM_latitude(Float.parseFloat(BeaconData[6]));
-                        main.state.setM_longitude(Float.parseFloat(BeaconData[7]));
-                        beaconView.SetGPSLock(main.state.getM_fix(),main.state.getM_message(), main.state.getM_gpsTime(),main.state.getM_gpsDate(),main.state.getM_latitude(), main.state.getM_longitude());
+                        main.state.setBeaconAttributes(BeaconData);
 
+                        if(main.state.getM_fix() > 0) {
+                            beaconView.SetGPSLock(main.state.getM_message(), setCorrectTimezone(main.state.getM_gpsDate()+" "+main.state.getM_gpsTime()),main.state.getM_latitude(), main.state.getM_longitude());
+                        } else {
+                            beaconView.SetNoGPSLock();
+                        }
                         toastMsg = BeaconData[BeaconData.length-1];
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
@@ -204,6 +218,24 @@ public class SerialActivity extends AppCompatActivity {
                     //toast.show();
                     break;
             }
+        }
+
+        private String  setCorrectTimezone(String dateTime){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            TimeZone tz = TimeZone.getTimeZone("Asia/Manila");
+            Date parsed = new Date();
+
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            try {
+                 parsed = format.parse(dateTime);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            destFormat.setTimeZone(tz);
+
+            return destFormat.format(parsed);
         }
     }
 }
