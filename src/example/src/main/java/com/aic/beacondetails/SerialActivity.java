@@ -86,11 +86,8 @@ public class SerialActivity extends AppCompatActivity {
         setContentView(R.layout.activity_serial);
 
         mHandler = new MyHandler(this);
-        //beaconView = new BeaconView(this);
-        //beaconView.InitializeView(this, R.id.textView1,R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
         InitializeAllViews();
 
-        //beaconView.display.setMovementMethod(new ScrollingMovementMethod());
         msgList.setAdapter(msgAdapter);
         msgAdapter.notifyDataSetChanged();
         final SharedPreferences sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -199,13 +196,24 @@ public class SerialActivity extends AppCompatActivity {
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
                     try{
                         String BeaconData[] = data.split(",",-1);
-                        main.state.setBeaconAttributes(BeaconData);
+                        state.setBeaconAttributes(BeaconData);
 
-                        if(main.state.getM_fix() > 0) {
-                            beaconView.SetGPSLock(main.state.getM_message(), setCorrectTimezone(main.state.getM_gpsDate()+" "+main.state.getM_gpsTime()),main.state.getM_latitude(), main.state.getM_longitude());
+                        getBeaconData();
+                        //convert coordinates
+                        /*int latdeg, longdeg;
+                        float latmin, longmin;
+
+                        latdeg = (int) state.getM_latitude()/100;
+                        latmin = state.getM_latitude() - latdeg*100;
+                        longdeg =(int) state.getM_longitude()/100;
+                        longmin = state.getM_longitude() - longdeg*100;
+
+                        if(state.getM_fix() > 0) {
+                            beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
+                                    String.valueOf(latdeg)+" "+String.valueOf(latmin), String.valueOf(longdeg)+" "+String.valueOf(longmin));
                         } else {
                             beaconView.SetNoGPSLock();
-                        }
+                        }*/
                         toastMsg = BeaconData[BeaconData.length-1];
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
@@ -218,6 +226,23 @@ public class SerialActivity extends AppCompatActivity {
                     //toast.show();
                     break;
             }
+        }
+        private void getBeaconData(){
+            int latdeg, longdeg;
+            float latmin, longmin;
+
+            latdeg = (int) state.getM_latitude()/100;
+            latmin = state.getM_latitude() - latdeg*100;
+            longdeg =(int) state.getM_longitude()/100;
+            longmin = state.getM_longitude() - longdeg*100;
+
+            if(state.getM_fix() > 0) {
+                beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
+                        String.valueOf(latdeg)+" "+String.valueOf(latmin), String.valueOf(longdeg)+" "+String.valueOf(longmin));
+            } else {
+                beaconView.SetNoGPSLock();
+            }
+
         }
 
         private String  setCorrectTimezone(String dateTime){

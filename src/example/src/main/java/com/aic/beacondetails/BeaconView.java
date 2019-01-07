@@ -28,14 +28,14 @@ public class BeaconView {
         editTextMSG = (EditText) activity.findViewById(editTxtMsgID);
     }
 
-    public void SetGPSLock(String message, String gpsDatetime, float lattd, float longh) {
+    public void SetGPSLock(String message, String gpsDatetime, String lattd, String longh) {
 
             msg.setText("Recent: " + message);
             gpsLock.setText("good GPS Lock");
             gpsLock.setTextColor(Color.parseColor("#77b800"));
             dateTime.setText(gpsDatetime);
-            lat.setText(String.valueOf(lattd));
-            lon.setText(String.valueOf(longh));
+            lat.setText(lattd);
+            lon.setText(longh);
     }
 
     public void SetNoGPSLock() {
