@@ -134,7 +134,7 @@ public class UsbService extends Service {
     }
 
     /*
-     * This function will be called from MainActivity to write data through Serial Port
+     * This function will be called from SerialActivity to write data through Serial Port
      */
     public void write(byte[] data) {
         if (serialPort != null)
@@ -168,12 +168,12 @@ public class UsbService extends Service {
                     break;
             }
             if (!keep) {
-                // There is no USB devices connected (but usb host were listed). Send an intent to MainActivity.
+                // There is no USB devices connected (but usb host were listed). Send an intent to SerialActivity.
                 Intent intent = new Intent(ACTION_NO_USB);
                 sendBroadcast(intent);
             }
         } else {
-            // There is no USB devices connected. Send an intent to MainActivity
+            // There is no USB devices connected. Send an intent to SerialActivity
             Intent intent = new Intent(ACTION_NO_USB);
             sendBroadcast(intent);
         }
@@ -218,7 +218,7 @@ public class UsbService extends Service {
                     serialPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
                     serialPort.read(mCallback);
 
-                    // Everything went as expected. Send an intent to MainActivity
+                    // Everything went as expected. Send an intent to SerialActivity
                     Intent intent = new Intent(ACTION_USB_READY);
                     context.sendBroadcast(intent);
                 } else {

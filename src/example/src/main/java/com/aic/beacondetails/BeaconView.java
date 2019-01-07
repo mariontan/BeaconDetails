@@ -2,25 +2,20 @@ package com.aic.beacondetails;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class BeaconView {
 
-    protected TextView gpsLock,msg,display,time,date,lat,lon;
+    private TextView gpsLock,msg,time,date,lat,lon;
+    protected TextView display;
+    protected EditText editTextMSG;
 
     public BeaconView(){
 
     }
-    /*public BeaconView(Activity activity, int displayID, int timeID, int dateID, int latID, int longID, int msgID) {
-        display = (TextView) activity.findViewById(displayID);
-        time = (TextView) activity.findViewById(timeID);
-        date = (TextView) activity.findViewById(dateID);
-        lat = (TextView) activity.findViewById(latID);
-        lon = (TextView) activity.findViewById(longID);
-        msg = (TextView) activity.findViewById(msgID);
-    }*/
 
-    public void setView(Activity activity, int displayID, int timeID, int dateID, int latID, int longID, int msgID,int gpsLockID) {
+    public void setView(Activity activity, int displayID, int timeID, int dateID, int latID, int longID, int msgID,int gpsLockID, int editTxtMsgID) {
         display = (TextView) activity.findViewById(displayID);
         time = (TextView) activity.findViewById(timeID);
         date = (TextView) activity.findViewById(dateID);
@@ -28,6 +23,7 @@ public class BeaconView {
         lon = (TextView) activity.findViewById(longID);
         msg = (TextView) activity.findViewById(msgID);
         gpsLock = (TextView) activity.findViewById(gpsLockID);
+        editTextMSG = (EditText) activity.findViewById(editTxtMsgID);
     }
 
     public void SetGPSLock(int gpsLocked, String message, String gpsTime, String gpsDate, float lattd, float longh) {

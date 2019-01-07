@@ -6,7 +6,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.aic.beacondetails.MainActivity">
+                tools:context="com.aic.beacondetails.SerialActivity">
 
     <TextView
         android:id="@+id/textViewLock"
@@ -52,7 +52,7 @@
         android:gravity="bottom"/>
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/editTextMsg"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewLon"
@@ -69,8 +69,8 @@
         style="?borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/editText1"
-        android:layout_alignBottom="@+id/editText1"
+        android:layout_toRightOf="@+id/editTextMsg"
+        android:layout_alignBottom="@+id/editTextMsg"
         android:layout_marginTop="42dp"
         android:text="Send"/>
 

@@ -32,7 +32,7 @@ public class USER_info extends AppCompatActivity {
     }
 
     public void readSerial(View v){
-        Intent intent = new Intent(USER_info.this, MainActivity.class);
+        Intent intent = new Intent(USER_info.this, SerialActivity.class);
         startActivity(intent);
     }
 
