@@ -19,32 +19,80 @@
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <TextView
+        android:id="@+id/textViewRecent"
+        android:layout_below="@+id/textViewLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Recent: "
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
         android:id="@+id/textViewRecentMsg"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_centerHorizontal="true"
-        android:gravity="bottom"
-        android:layout_marginTop="34dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewRecent"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_below="@+id/textViewRecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewDateTime"
+        android:text="Date &amp;Time : "
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/textViewDateTime"
-        android:layout_below="@+id/textViewRecentMsg"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:gravity="bottom"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewRecentMsg"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewDate"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewLatitude"
+        android:layout_below="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewLat"
+        android:text="Lat: "
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/textViewLat"
-        android:layout_below="@+id/textViewDateTime"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:gravity="bottom"/>
+        android:layout_below="@+id/textViewDateTime"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewLongitude"
+        android:layout_below="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewLon"
+        android:text="Lon: "
+        android:textSize="18sp"/>
+
     <TextView
         android:id="@+id/textViewLon"
-        android:layout_below="@+id/textViewLat"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:gravity="bottom"/>
+        android:layout_below="@+id/textViewLatitude"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/editTextMsg"

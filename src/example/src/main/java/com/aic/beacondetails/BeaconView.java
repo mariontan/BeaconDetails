@@ -30,7 +30,7 @@ public class BeaconView {
 
     public void SetGPSLock(String message, String gpsDatetime, String lattd, String longh) {
 
-            msg.setText("Recent: " + message);
+            msg.setText(message);
             gpsLock.setText("good GPS Lock");
             gpsLock.setTextColor(Color.parseColor("#77b800"));
             dateTime.setText(gpsDatetime);
