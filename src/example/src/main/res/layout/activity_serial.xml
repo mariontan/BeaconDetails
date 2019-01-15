@@ -117,8 +117,6 @@
         android:layout_marginTop="42dp"
         android:text="Send"/>
 
-
-
     <ListView
         android:id="@+id/previousMessage"
         android:layout_width="match_parent"

@@ -94,7 +94,9 @@ public class UsbService extends Service {
                 Intent intent = new Intent(ACTION_USB_DISCONNECTED);
                 arg0.sendBroadcast(intent);
                 serialPortConnected = false;
-                serialPort.close();
+                try {
+                    serialPort.close();
+                }catch (Exception e){}
             }
         }
     };

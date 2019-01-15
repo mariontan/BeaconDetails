@@ -43,7 +43,7 @@ public class BeaconView {
         gpsLock.setText("no GPS Lock, Go out!");
         gpsLock.setTextColor(Color.parseColor("#c90000"));
         dateTime.setText("no date");
-        lat.setText("GPS");
+        lat.setText("no GPS");
         lon.setText("no GPS");
     }
 
