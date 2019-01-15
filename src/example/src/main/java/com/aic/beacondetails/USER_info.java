@@ -27,7 +27,7 @@ public class USER_info extends AppCompatActivity {
         etBD = (EditText) findViewById(R.id.editTextBD);
         etName = (EditText) findViewById(R.id.editTextName);
         etAge = (EditText) findViewById(R.id.editTextAge);
-        etGender = (EditText) findViewById(R.id.editTextgender);
+        etGender = (EditText) findViewById(R.id.editTextGender);
         sp = PreferenceManager.getDefaultSharedPreferences(this );
     }
 
