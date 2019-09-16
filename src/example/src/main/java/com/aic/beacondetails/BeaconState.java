@@ -1,7 +1,5 @@
 package com.aic.beacondetails;
 
-import java.text.SimpleDateFormat;
-
 public class BeaconState {
     private String m_id;
     private String m_name;

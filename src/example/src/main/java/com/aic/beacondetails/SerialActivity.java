@@ -190,16 +190,15 @@ public class SerialActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UsbService.MESSAGE_FROM_SERIAL_PORT:
-                    String data = (String) msg.obj;
+                    String data = msg.obj.toString();
                     String toastMsg = "No message";
                     SerialActivity main = mActivity.get();
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
+                    //*
                     try{
                         String BeaconData[] = data.split(";",-1);
                         state.setBeaconAttributes(BeaconData);
-
                         getBeaconData();
-
                         toastMsg = "data length: "+ BeaconData.length;
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
@@ -215,13 +214,10 @@ public class SerialActivity extends AppCompatActivity {
         }
         private void getBeaconData(){
 
-            if(state.getM_fix() > 0) {
-                beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
-                       RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
-            } else {
-                beaconView.SetNoGPSLock();
-            }
+            beaconView.SetGPSInfo(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
+                    RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
 
+            beaconView.SetGPSFix(state.getM_fix() > 0);
         }
 
         private String RawToDegMin(float degrees) {
