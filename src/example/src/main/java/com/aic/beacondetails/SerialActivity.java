@@ -195,12 +195,12 @@ public class SerialActivity extends AppCompatActivity {
                     SerialActivity main = mActivity.get();
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
                     try{
-                        String BeaconData[] = data.split(",",-1);
+                        String BeaconData[] = data.split(";",-1);
                         state.setBeaconAttributes(BeaconData);
 
                         getBeaconData();
 
-                        toastMsg = BeaconData[BeaconData.length-1];
+                        toastMsg = "data length: "+ BeaconData.length;
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
                     }
@@ -209,14 +209,14 @@ public class SerialActivity extends AppCompatActivity {
                             toastMsg,
                             Toast.LENGTH_SHORT);
 
-                    //toast.show();
+                    toast.show();
                     break;
             }
         }
         private void getBeaconData(){
 
             if(state.getM_fix() > 0) {
-                beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
+                beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
                        RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
             } else {
                 beaconView.SetNoGPSLock();
@@ -231,14 +231,14 @@ public class SerialActivity extends AppCompatActivity {
         }
 
         private String  setCorrectTimezone(String dateTime){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("ddMMyy,HHmmss") ;
             SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             TimeZone tz = TimeZone.getTimeZone("Asia/Manila");
             Date parsed = new Date();
 
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            sourceFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             try {
-                 parsed = format.parse(dateTime);
+                 parsed = sourceFormat.parse(dateTime);
 
             } catch (ParseException e) {
                 e.printStackTrace();
