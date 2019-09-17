@@ -112,7 +112,9 @@ public class SerialActivity extends AppCompatActivity {
     }
 
     private void InitializeAllViews(){
-        beaconView = new BeaconView(this, R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
+        beaconView = new BeaconView(this, R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon,
+                                    R.id.textViewAlt,R.id.textViewHdop,R.id.textViewFixq,R.id.textViewFix,
+                                    R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
         msgList = (ListView) findViewById(R.id.previousMessage);
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
     }
@@ -215,7 +217,9 @@ public class SerialActivity extends AppCompatActivity {
         private void getBeaconData(){
 
             beaconView.SetGPSInfo(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
-                    RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
+                    RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()),
+                    String.valueOf(state.getM_altitude()),String.valueOf(state.getM_hdop()),
+                    String.valueOf(state.getM_quality()),String.valueOf(state.getM_fix()));
 
             beaconView.SetGPSFix(state.getM_fix() > 0);
         }

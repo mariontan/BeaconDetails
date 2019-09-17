@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/textViewFix"
-        android:text="Fixq: "
+        android:text="Fix: "
         android:textSize="18sp"/>
     <TextView
         android:id="@+id/textViewFix"
