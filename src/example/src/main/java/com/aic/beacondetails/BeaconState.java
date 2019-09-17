@@ -13,6 +13,8 @@ public class BeaconState {
     private float m_latitude;
     private float m_longitude;
     private float m_altitude;
+    private float m_hdop;
+    private String m_gpsdatetime;
 
     public String getM_id() { return m_id; }
 
@@ -94,14 +96,23 @@ public class BeaconState {
         this.m_altitude = p_altitude;
     }
 
+    public float getM_hdop(){return m_hdop;}
 
+    public void setM_hdop(float p_hdop ){this.m_hdop=p_hdop;}
+
+    public String getM_gpsdatetime(){return m_gpsdatetime;}
+
+    public void setM_gpsDateTime(String p_gpsdatetime){this.m_gpsdatetime = p_gpsdatetime;}
 
     public void setBeaconAttributes(String[] BeaconData){
-        setM_message(BeaconData[BeaconData.length-1]);
-        setM_fix(Integer.parseInt(BeaconData[BeaconData.length-2]));
-        setM_gpsTime(BeaconData[3]+":"+BeaconData[4]+":"+BeaconData[5]);
-        setM_gpsDate(BeaconData[1]+"/"+BeaconData[2]+"/"+BeaconData[0]);
-        setM_latitude(Float.parseFloat(BeaconData[6]));
-        setM_longitude(Float.parseFloat(BeaconData[7]));
+        setM_gpsDateTime(BeaconData[0]);
+        setM_latitude(Float.parseFloat(BeaconData[1]));
+        setM_longitude(Float.parseFloat(BeaconData[2]));
+        setM_altitude(Float.parseFloat(BeaconData[3]));
+        setM_hdop(Float.parseFloat(BeaconData[4]));
+        setM_message(BeaconData[5]);
+        setM_quality(Integer.parseInt(BeaconData[6]));
+        setM_fix(Integer.parseInt(BeaconData[7]));
+
     }
 }

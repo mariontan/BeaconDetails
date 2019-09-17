@@ -112,7 +112,9 @@ public class SerialActivity extends AppCompatActivity {
     }
 
     private void InitializeAllViews(){
-        beaconView = new BeaconView(this, R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon, R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
+        beaconView = new BeaconView(this, R.id.textViewDateTime, R.id.textViewLat, R.id.textViewLon,
+                                    R.id.textViewAlt,R.id.textViewHdop,R.id.textViewFixq,R.id.textViewFix,
+                                    R.id.textViewRecentMsg,R.id.textViewLock,R.id.editTextMsg);
         msgList = (ListView) findViewById(R.id.previousMessage);
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
     }
@@ -190,17 +192,16 @@ public class SerialActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case UsbService.MESSAGE_FROM_SERIAL_PORT:
-                    String data = (String) msg.obj;
+                    String data = msg.obj.toString();
                     String toastMsg = "No message";
                     SerialActivity main = mActivity.get();
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
+                    //*
                     try{
-                        String BeaconData[] = data.split(",",-1);
+                        String BeaconData[] = data.split(";",-1);
                         state.setBeaconAttributes(BeaconData);
-
                         getBeaconData();
-
-                        toastMsg = BeaconData[BeaconData.length-1];
+                        toastMsg = "data length: "+ BeaconData.length;
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
                     }
@@ -215,30 +216,29 @@ public class SerialActivity extends AppCompatActivity {
         }
         private void getBeaconData(){
 
-            if(state.getM_fix() > 0) {
-                beaconView.SetGPSLock(state.getM_message(), setCorrectTimezone(state.getM_gpsDate()+" "+state.getM_gpsTime()),
-                       RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()));
-            } else {
-                beaconView.SetNoGPSLock();
-            }
+            beaconView.SetGPSInfo(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
+                    RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()),
+                    String.valueOf(state.getM_altitude()),String.valueOf(state.getM_hdop()),
+                    String.valueOf(state.getM_quality()),String.valueOf(state.getM_fix()));
 
+            beaconView.SetGPSFix(state.getM_fix() > 0);
         }
 
         private String RawToDegMin(float degrees) {
             int deg = (int) degrees/100;
             float min = degrees - deg*100;
-            return String.valueOf(deg)+" "+String.valueOf(min);
+            return String.valueOf(deg!=0?deg:"")+String.valueOf(min);
         }
 
         private String  setCorrectTimezone(String dateTime){
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            SimpleDateFormat sourceFormat = new SimpleDateFormat("ddMMyy,HHmmss") ;
             SimpleDateFormat destFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             TimeZone tz = TimeZone.getTimeZone("Asia/Manila");
             Date parsed = new Date();
 
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            sourceFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
             try {
-                 parsed = format.parse(dateTime);
+                 parsed = sourceFormat.parse(dateTime);
 
             } catch (ParseException e) {
                 e.printStackTrace();

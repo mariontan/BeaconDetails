@@ -93,12 +93,79 @@
         android:layout_alignLeft="@+id/textViewDateTime"
         android:padding="0dp"
         android:textSize="18sp"/>
-
+    <TextView
+        android:id="@+id/textViewAltitude"
+        android:layout_below="@+id/textViewLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewAlt"
+        android:text="Alt: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewAlt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewLon"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewHDOP"
+        android:layout_below="@+id/textViewAltitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewHdop"
+        android:text="Hdop: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewHdop"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewAlt"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFIXQ"
+        android:layout_below="@+id/textViewHDOP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewFixq"
+        android:text="Fixq: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFixq"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewHdop"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFIX"
+        android:layout_below="@+id/textViewFIXQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewFix"
+        android:text="Fix: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFix"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewFixq"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
     <EditText
         android:id="@+id/editTextMsg"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewLon"
+        android:layout_below="@+id/textViewFIX"
         android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="max 40 characters"
