@@ -6,22 +6,23 @@
         android:name="android.hardware.usb.host"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name="com.aic.beacondetails.USER_info">
+        <activity android:name=".USER_info">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.aic.beacondetails.SerialActivity"
+            android:name=".SerialActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
@@ -33,10 +34,10 @@
         </activity>
 
         <service
-            android:name="com.aic.beacondetails.UsbService"
+            android:name=".UsbService"
             android:enabled="true" />
 
-
+        <activity android:name=".EmergencyButton"></activity>
     </application>
 
 </manifest>
