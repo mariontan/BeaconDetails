@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EmergencyButton">
 
-    <TextView
+    <Button
+        android:id="@+id/btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello"/>
-</android.support.constraint.ConstraintLayout>
+        android:text="@string/s_btn1"
+        android:onClick="btn1"/>
+    <Button
+        android:id="@+id/btn2"
+        android:layout_below="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn2"
+        android:onClick="btn2"/>
+    <Button
+        android:id="@+id/btn3"
+        android:layout_below="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn3"
+        android:onClick="btn3"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_below="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn4"
+        android:onClick="btn4"/>
+    <Button
+        android:id="@+id/btn5"
+        android:layout_below="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn5"
+        android:onClick="btn5"/>
+    <Button
+        android:id="@+id/btn6"
+        android:layout_below="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn6"
+        android:onClick="btn6"/>
+</RelativeLayout>
