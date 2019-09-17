@@ -227,7 +227,7 @@ public class SerialActivity extends AppCompatActivity {
         private String RawToDegMin(float degrees) {
             int deg = (int) degrees/100;
             float min = degrees - deg*100;
-            return String.valueOf(deg)+" "+String.valueOf(min);
+            return String.valueOf(deg!=0?deg:"")+String.valueOf(min);
         }
 
         private String  setCorrectTimezone(String dateTime){
