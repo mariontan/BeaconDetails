@@ -208,7 +208,7 @@ public class SerialActivity extends AppCompatActivity {
                             toastMsg,
                             Toast.LENGTH_SHORT);
 
-                    toast.show();
+                    //toast.show();
                     break;
             }
         }
