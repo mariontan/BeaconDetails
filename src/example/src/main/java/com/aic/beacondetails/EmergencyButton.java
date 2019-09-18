@@ -57,31 +57,6 @@ public class EmergencyButton extends AppCompatActivity {
             mActivity = new WeakReference<>(activity);
         }
 
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UsbService.MESSAGE_FROM_SERIAL_PORT:
-                    String data = msg.obj.toString();
-                    String toastMsg = "No message";
-                    EmergencyButton main = mActivity.get();
-                    //main.beaconView.display.append(data);//updates the text box with latest serial data
-                    //*
-                    try {
-                        String BeaconData[] = data.split(";", -1);
-                        state.setBeaconAttributes(BeaconData);
-                        toastMsg = "data length: " + BeaconData.length;
-                    } catch (Exception e) {
-                        toastMsg = data + " is the message. " + e.toString() + "is the error.";
-                    }
-
-                    Toast toast = Toast.makeText(main.getApplicationContext(),
-                            toastMsg,
-                            Toast.LENGTH_SHORT);
-
-                    //toast.show();
-                    break;
-            }
-        }
     }
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
@@ -96,32 +71,6 @@ public class EmergencyButton extends AppCompatActivity {
             usbService = null;
         }
     };
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emergency_button);
-
-        final SharedPreferences sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
-        mHandler = new MHandler(this);
-        Button button = (Button) findViewById(R.id.btn1);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                state.SetBeaconID(sharedpref,getApplicationContext());
-                String data = state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+
-                        state.getM_gender()+":"+sharedpref.getString(getString(R.string.s_btn1),"");
-                if(usbService != null){
-                    usbService.write(data.getBytes());
-                }
-            }
-        });
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        setFilters();  // Start listening notifications from UsbService
-        startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
-    }
     private void setFilters() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
@@ -146,5 +95,40 @@ public class EmergencyButton extends AppCompatActivity {
         Intent bindingIntent = new Intent(this, service);
         bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
+    public void eButton(int ID, final int strID, final SharedPreferences sharedpref){
+        Button button = (Button) findViewById(ID);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                state.SetBeaconID(sharedpref,getApplicationContext());
+                String data = state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+
+                        state.getM_gender()+":"+getString(strID);
+                if(usbService != null){
+                    usbService.write(data.getBytes());
+                }
+            }
+        });
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_emergency_button);
+
+        final SharedPreferences sharedpref = PreferenceManager.getDefaultSharedPreferences(this);
+        mHandler = new MHandler(this);
+        eButton(R.id.btn1,R.string.s_btn1,sharedpref);
+        eButton(R.id.btn2,R.string.s_btn2,sharedpref);
+        eButton(R.id.btn3,R.string.s_btn3,sharedpref);
+        eButton(R.id.btn4,R.string.s_btn4,sharedpref);
+        eButton(R.id.btn5,R.string.s_btn5,sharedpref);
+        eButton(R.id.btn6,R.string.s_btn6,sharedpref);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        setFilters();  // Start listening notifications from UsbService
+        startService(UsbService.class, usbConnection, null); // Start UsbService(if it was not started before) and Bind it
+    }
+
 
 }
