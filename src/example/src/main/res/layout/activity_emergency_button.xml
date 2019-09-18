@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmergencyButton">
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn1"/>
+    <Button
+        android:id="@+id/btn2"
+        android:layout_below="@+id/btn1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn2"/>
+    <Button
+        android:id="@+id/btn3"
+        android:layout_below="@+id/btn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn3"/>
+    <Button
+        android:id="@+id/btn4"
+        android:layout_below="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn4"/>
+    <Button
+        android:id="@+id/btn5"
+        android:layout_below="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn5"/>
+    <Button
+        android:id="@+id/btn6"
+        android:layout_below="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/s_btn6"/>
+    <Button
+        android:id="@+id/read"
+        android:layout_below="@+id/btn6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="read"
+        android:text="read"/>
+</RelativeLayout>

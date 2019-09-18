@@ -11,5 +11,13 @@
     <string name="name">com.aic.beacondetails.name</string>
     <string name="age">com.aic.beacondetails.age</string>
     <string name="gender">com.aic.beacondetails.gender</string>
+    <!--emergency button values-->
+    <string name="title_activity_emergency_buttons">EmergencyButtons</string>
+    <string name="s_btn1">Tumataas tubig</string>
+    <string name="s_btn2">May Buntis dito</string>
+    <string name="s_btn3">Gutom kami</string>
+    <string name="s_btn4">No water</string>
+    <string name="s_btn5">sira tulay</string>
+    <string name="s_btn6">sunog</string>
 
 </resources>

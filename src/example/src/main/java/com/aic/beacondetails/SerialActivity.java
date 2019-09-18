@@ -96,7 +96,7 @@ public class SerialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!beaconView.editTextMSG.getText().toString().equals("")) {
-                    GetSharedPref(sharedpref);
+                    state.SetBeaconID(sharedpref,getApplicationContext());
                     String data =state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+beaconView.editTextMSG.getText().toString();
                     if (usbService != null) { // if UsbService was correctly binded, Send data
                         prevMsg.add(data);
@@ -119,12 +119,12 @@ public class SerialActivity extends AppCompatActivity {
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
     }
 
-    private void GetSharedPref(SharedPreferences sharedpref){
-        state.setM_id(sharedpref.getString(getString(R.string.BD),""));
-        state.setM_message(sharedpref.getString(getString(R.string.name),""));
-        state.setM_age(sharedpref.getInt(getString(R.string.age),0));
-        state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
-    }
+//    private void GetSharedPref(SharedPreferences sharedpref){
+//        state.setM_id(sharedpref.getString(getString(R.string.BD),""));
+//        state.setM_message(sharedpref.getString(getString(R.string.name),""));
+//        state.setM_age(sharedpref.getInt(getString(R.string.age),0));
+//        state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
+//    }
 
     private void CloseKeyboard(){
         View view = this.getCurrentFocus();

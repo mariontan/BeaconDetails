@@ -1,5 +1,8 @@
 package com.aic.beacondetails;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 public class BeaconState {
     private String m_id;
     private String m_name;
@@ -114,5 +117,11 @@ public class BeaconState {
         setM_quality(Integer.parseInt(BeaconData[6]));
         setM_fix(Integer.parseInt(BeaconData[7]));
 
+    }
+        public void SetBeaconID(SharedPreferences sharedpref, Context context){
+        setM_id(sharedpref.getString(context.getResources().getString(R.string.BD),""));
+        setM_message(sharedpref.getString(context.getResources().getString(R.string.name),""));
+        setM_age(sharedpref.getInt(context.getResources().getString(R.string.age),0));
+        setM_gender(sharedpref.getString(context.getResources().getString(R.string.gender),""));
     }
 }

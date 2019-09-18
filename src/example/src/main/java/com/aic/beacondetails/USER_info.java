@@ -51,6 +51,10 @@ public class USER_info extends AppCompatActivity {
 
         Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
     }
+    public void emergency(View v) {
+        Intent intent = new Intent(USER_info.this, EmergencyButton.class);
+        startActivity(intent);
+    }
 
     @Override
     public void onResume() {
