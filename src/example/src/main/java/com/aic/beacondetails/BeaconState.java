@@ -118,7 +118,7 @@ public class BeaconState {
         setM_fix(Integer.parseInt(BeaconData[7]));
 
     }
-        public void GetSharedPref(SharedPreferences sharedpref, Context context){
+        public void SetBeaconID(SharedPreferences sharedpref, Context context){
         setM_id(sharedpref.getString(context.getResources().getString(R.string.BD),""));
         setM_message(sharedpref.getString(context.getResources().getString(R.string.name),""));
         setM_age(sharedpref.getInt(context.getResources().getString(R.string.age),0));

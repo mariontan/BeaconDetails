@@ -96,7 +96,7 @@ public class SerialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!beaconView.editTextMSG.getText().toString().equals("")) {
-                    state.GetSharedPref(sharedpref,getApplicationContext());
+                    state.SetBeaconID(sharedpref,getApplicationContext());
                     String data =state.getM_id()+":"+ state.getM_message()+":"+String.valueOf(state.getM_age())+":"+state.getM_gender()+":"+beaconView.editTextMSG.getText().toString();
                     if (usbService != null) { // if UsbService was correctly binded, Send data
                         prevMsg.add(data);
