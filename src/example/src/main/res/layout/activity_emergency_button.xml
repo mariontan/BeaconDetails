@@ -42,4 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/s_btn6"/>
+    <Button
+        android:id="@+id/read"
+        android:layout_below="@+id/btn6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="read"
+        android:text="read"/>
 </RelativeLayout>

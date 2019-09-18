@@ -109,6 +109,10 @@ public class EmergencyButton extends AppCompatActivity {
             }
         });
     }
+    public void read(View V){
+        Intent intent = new Intent(EmergencyButton.this, SerialActivity.class);
+        startActivity(intent);
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
