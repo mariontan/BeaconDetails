@@ -55,7 +55,10 @@ public class USER_info extends AppCompatActivity {
         Intent intent = new Intent(USER_info.this, EmergencyButton.class);
         startActivity(intent);
     }
-
+    public void chat(View v){
+        Intent intent = new Intent(USER_info.this,ChatActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onResume() {
         super.onResume();

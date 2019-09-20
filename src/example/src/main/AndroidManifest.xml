@@ -2,18 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aic.beacondetails">
 
-    <uses-feature
-        android:name="android.hardware.usb.host"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <activity android:name=".ChatActivity"></activity>
         <activity android:name=".USER_info">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,11 +27,18 @@
                 android:resource="@xml/device_filter" />
         </activity>
 
+        <activity android:name=".EmergencyButton" />
+
         <service
             android:name=".UsbService"
             android:enabled="true" />
-
-        <activity android:name=".EmergencyButton"></activity>
     </application>
+
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>
