@@ -38,25 +38,7 @@ public class SerialActivity extends AppCompatActivity {
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            /*
-            switch (intent.getAction()) {
-                case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
-                    Toast.makeText(context, "USB Ready", Toast.LENGTH_SHORT).show();
-                    break;
-                case UsbService.ACTION_USB_PERMISSION_NOT_GRANTED: // USB PERMISSION NOT GRANTED
-                    Toast.makeText(context, "USB Permission not granted", Toast.LENGTH_SHORT).show();
-                    break;
-                case UsbService.ACTION_NO_USB: // NO USB CONNECTED
-                    Toast.makeText(context, "No USB connected", Toast.LENGTH_SHORT).show();
-                    break;
-                case UsbService.ACTION_USB_DISCONNECTED: // USB DISCONNECTED
-                    Toast.makeText(context, "USB disconnected", Toast.LENGTH_SHORT).show();
-                    break;
-                case UsbService.ACTION_USB_NOT_SUPPORTED: // USB NOT SUPPORTED
-                    Toast.makeText(context, "USB device not supported", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            //*/
+
             String msg = SerialConnector.GetToastMessage(intent.getAction());
             if(msg == null) return;
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -124,13 +106,6 @@ public class SerialActivity extends AppCompatActivity {
         msgAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, prevMsg);
     }
 
-//    private void GetSharedPref(SharedPreferences sharedpref){
-//        state.setM_id(sharedpref.getString(getString(R.string.BD),""));
-//        state.setM_message(sharedpref.getString(getString(R.string.name),""));
-//        state.setM_age(sharedpref.getInt(getString(R.string.age),0));
-//        state.setM_gender(sharedpref.getString(getString(R.string.gender),""));
-//    }
-
     private void CloseKeyboard(){
         View view = this.getCurrentFocus();
         if(view !=null){
@@ -152,33 +127,6 @@ public class SerialActivity extends AppCompatActivity {
         unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
-
-//    private void startService(Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
-//        if (!UsbService.SERVICE_CONNECTED) {
-//            Intent startService = new Intent(this, service);
-//            if (extras != null && !extras.isEmpty()) {
-//                Set<String> keys = extras.keySet();
-//                for (String key : keys) {
-//                    String extra = extras.getString(key);
-//                    startService.putExtra(key, extra);
-//                }
-//            }
-//            startService(startService);
-//        }
-//        Intent bindingIntent = new Intent(this, service);
-//        bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
-//    }
-
-//    private void setFilters() {
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
-//        filter.addAction(UsbService.ACTION_NO_USB);
-//        filter.addAction(UsbService.ACTION_USB_DISCONNECTED);
-//        filter.addAction(UsbService.ACTION_USB_NOT_SUPPORTED);
-//        filter.addAction(UsbService.ACTION_USB_PERMISSION_NOT_GRANTED);
-//        registerReceiver(mUsbReceiver, filter);
-//    }
-
 
     public static String getDefaults(String key, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
