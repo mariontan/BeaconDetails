@@ -17,8 +17,6 @@ import java.util.Set;
 
 public class SerialConnector {
 
-
-
     public static String GetToastMessage(String action) {
         switch (action) {
             case UsbService.ACTION_USB_PERMISSION_GRANTED: // USB PERMISSION GRANTED
@@ -33,26 +31,6 @@ public class SerialConnector {
                 return "USB device not supported";
         }
         return null;
-    }
-
-    private static UsbService m_usbService;
-    private static Handler m_handler;
-
-    public static ServiceConnection getUsbConnection(UsbService p_usbService, Handler p_handler){
-        m_usbService = p_usbService;
-        m_handler = p_handler;
-         return new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName arg0, IBinder arg1) {
-                m_usbService = ((UsbService.UsbBinder) arg1).getService();
-                m_usbService.setHandler(m_handler);
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName arg0) {
-                m_usbService = null;
-            }
-        };
     }
 
     public static void startService(Activity activity, Class<?> service, ServiceConnection serviceConnection, Bundle extras) {
@@ -70,6 +48,7 @@ public class SerialConnector {
         Intent bindingIntent = new Intent(activity, service);
         activity.bindService(bindingIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
+
     public static void setFilters(Activity activity,BroadcastReceiver p_usbReceiver) {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UsbService.ACTION_USB_PERMISSION_GRANTED);
