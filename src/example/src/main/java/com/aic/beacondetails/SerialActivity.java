@@ -32,6 +32,14 @@ import java.util.TimeZone;
 
 public class SerialActivity extends AppCompatActivity {
 
+    private UsbService usbService;
+    private ListView msgList;
+    private MyHandler mHandler;
+    private List<String> prevMsg = new ArrayList<String>();
+    private ArrayAdapter<String> msgAdapter;
+    private BeaconState state = new BeaconState();
+    private BeaconView beaconView;// = new BeaconView();
+
     /*
      * Notifications from UsbService will be received here.
      */
@@ -45,13 +53,6 @@ public class SerialActivity extends AppCompatActivity {
         }
     };
 
-    private UsbService usbService;
-    private ListView msgList;
-    private MyHandler mHandler;
-    private List<String> prevMsg = new ArrayList<String>();
-    private ArrayAdapter<String> msgAdapter;
-    private BeaconState state = new BeaconState();
-    private BeaconView beaconView;// = new BeaconView();
 
 
     private final ServiceConnection usbConnection = new ServiceConnection() {
@@ -151,10 +152,11 @@ public class SerialActivity extends AppCompatActivity {
                     SerialActivity main = mActivity.get();
                     //main.beaconView.display.append(data);//updates the text box with latest serial data
                     //*
+                    //toastMsg = data;
                     try{
                         String BeaconData[] = data.split(";",-1);
                         state.setBeaconAttributes(BeaconData);
-                        getBeaconData();
+                        setBeaconData();
                         toastMsg = "data length: "+ BeaconData.length;
                     }catch (Exception e){
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
@@ -168,7 +170,7 @@ public class SerialActivity extends AppCompatActivity {
                     break;
             }
         }
-        private void getBeaconData(){
+        private void setBeaconData(){
 
             beaconView.SetGPSInfo(state.getM_message(), setCorrectTimezone(state.getM_gpsdatetime()),
                     RawToDegMin(state.getM_latitude()),RawToDegMin(state.getM_longitude()),
