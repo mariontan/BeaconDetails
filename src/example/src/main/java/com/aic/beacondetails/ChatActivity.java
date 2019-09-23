@@ -10,7 +10,9 @@ import android.os.IBinder;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,8 +27,8 @@ public class ChatActivity extends AppCompatActivity {
     private ListView chatView;
     private List<String> chatlst = new ArrayList<>();
     private ArrayAdapter<String> chatAdapter;
-    private String chatmsg = "";
     private BeaconState state = new BeaconState();
+    private EditText edtChat;
 
     private final BroadcastReceiver mUsbReceiver = new BroadcastReceiver() {
         @Override
@@ -75,6 +77,13 @@ public class ChatActivity extends AppCompatActivity {
         unregisterReceiver(mUsbReceiver);
         unbindService(usbConnection);
     }
+    public void send (View v){
+        edtChat = (EditText) findViewById(R.id.edtChat);
+        String msg = edtChat.getText().toString();
+        if(!msg.equals("")){
+            usbService.write(msg.getBytes());
+        }
+    }
     private class MyHandler extends Handler {
         private final WeakReference<ChatActivity> mActivity;
 
@@ -94,8 +103,7 @@ public class ChatActivity extends AppCompatActivity {
                     try {
                         String BeaconData[] = data.split(";", -1);
                         state.setBeaconAttributes(BeaconData);
-                        chatmsg = state.getM_message();
-                        chatlst.add(chatmsg);
+                        chatlst.add(state.getM_message());
                         chatAdapter.notifyDataSetChanged();
                         toastMsg = "data length: " + BeaconData[5];
                     } catch (Exception e) {

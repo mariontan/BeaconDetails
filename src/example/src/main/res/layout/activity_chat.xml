@@ -22,5 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/edtChat"
         android:layout_alignBottom="@id/edtChat"
+        android:onClick="send"
         android:text="send"/>
 </RelativeLayout>
