@@ -82,6 +82,7 @@ public class ChatActivity extends AppCompatActivity {
         String msg = edtChat.getText().toString();
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
+            edtChat.setText("");
         }
     }
     private class MyHandler extends Handler {
@@ -105,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
                         state.setBeaconAttributes(BeaconData);
                         chatlst.add(state.getM_message());
                         chatAdapter.notifyDataSetChanged();
-                        toastMsg = "data length: " + BeaconData[5];
+                        toastMsg = "data length: " + BeaconData.length;
                     } catch (Exception e) {
                         toastMsg = data + " is the message. " + e.toString() + "is the error.";
                     }
@@ -114,7 +115,7 @@ public class ChatActivity extends AppCompatActivity {
                             toastMsg,
                             Toast.LENGTH_SHORT);
 
-                    toast.show();
+                    //toast.show();
                     break;
             }
         }
