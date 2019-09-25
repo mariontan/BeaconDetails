@@ -113,6 +113,13 @@
         android:layout_alignParentLeft="true"
         android:onClick="emergency"
         android:layout_marginTop="30dp" />
+    <Button
+        android:id="@+id/btnChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnEmergency"
+        android:text="Chat"
+        android:onClick="chat"/>
 
 
 
