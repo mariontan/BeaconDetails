@@ -49,6 +49,7 @@ public class ChatActivity extends SerialActivity {
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
             edtChat.setText("");
+            CloseKeyboard();
         }
     }
 
