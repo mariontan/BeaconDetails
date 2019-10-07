@@ -81,8 +81,11 @@ public class ChatActivity extends SerialActivity {
         String msg = edtChat.getText().toString();
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
+            db.addPlayer(new Player(4,msg,"F",220));
+
             edtChat.setText("");
             CloseKeyboard();
+
         }
     }
 
@@ -90,6 +93,7 @@ public class ChatActivity extends SerialActivity {
         String BeaconData[] = data.split(";", -1);
         state.setBeaconAttributes(BeaconData);
         chatlst.add(state.getM_message());
+        db.addPlayer(new Player(4,state.getM_message(),"F",220));
         chatAdapter.notifyDataSetChanged();
     }
 
