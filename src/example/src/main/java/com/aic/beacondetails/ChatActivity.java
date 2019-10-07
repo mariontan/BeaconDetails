@@ -86,7 +86,6 @@ public class ChatActivity extends SerialActivity {
         String msg = edtChat.getText().toString();
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
-            //db.addEntry(state);
             edtChat.setText("");
             CloseKeyboard();
         }
@@ -97,7 +96,7 @@ public class ChatActivity extends SerialActivity {
         state.setBeaconAttributes(BeaconData);
         chatlst.add(state.getM_message());
         ContentValues entry = db.convertBeaconStateToEntry(state);
-        Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
 
         db.addEntry(entry);
         chatAdapter.notifyDataSetChanged();
