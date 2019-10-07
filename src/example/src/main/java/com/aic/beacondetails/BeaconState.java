@@ -115,7 +115,8 @@ public class BeaconState {
 
     @Override
     public String toString() {
-        return getM_id() + "]:"+getM_destid()+ "]:" + getM_message();
+        //return getM_id() + "]:"+getM_destid()+ "]:" + getM_message();
+        return getM_message();
     }
 
     public void setBeaconAttributes(String[] BeaconData){

@@ -46,33 +46,6 @@ public class ChatActivity extends SerialActivity {
                 chatlst.add(beaconMessages.get(i).toString());
             }
         }
-        // create some players
-//        Player player1 = new Player(1, "Lebron James", "F", 203);
-//        Player player2 = new Player(2, "Kevin Durant", "F", 208);
-//        Player player3 = new Player(3, "Rudy Gobert", "C", 214);
-        // add them
-//        db.addPlayer(player1);
-//        db.addPlayer(player2);
-//        db.addPlayer(player3);
-//        // list all players
-//        List<Player> players = db.allPlayers();
-//
-//        if (players != null) {
-//            String[] itemsNames = new String[players.size()];
-//
-//            for (int i = 0; i < players.size(); i++) {
-//                itemsNames[i] = players.get(i).toString();
-//            }
-//
-//            // display like string instances
-////            ListView list = (ListView) findViewById(R.id.lvChatView);
-////            list.setAdapter(new ArrayAdapter<String>(this,
-////            android.R.layout.simple_list_item_1, android.R.id.text1, itemsNames));
-////            chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,itemsNames);
-////            chatView.setAdapter(chatAdapter);
-////            chatAdapter.notifyDataSetChanged();
-//
-//        }
     }
 
     @Override
@@ -83,7 +56,7 @@ public class ChatActivity extends SerialActivity {
 
     public void send (View v){
         edtChat = (EditText) findViewById(R.id.edtChat);
-        String msg = edtChat.getText().toString();
+        String msg = state.getM_id()+":"+edtChat.getText().toString();
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
             edtChat.setText("");
@@ -96,7 +69,7 @@ public class ChatActivity extends SerialActivity {
         state.setBeaconAttributes(BeaconData);
         chatlst.add(state.toString());
         ContentValues entry = db.convertBeaconStateToEntry(state);
-        Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
 
         db.addEntry(entry);
         chatAdapter.notifyDataSetChanged();
