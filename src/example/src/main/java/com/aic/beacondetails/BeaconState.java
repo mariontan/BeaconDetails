@@ -19,6 +19,7 @@ public class BeaconState {
     private float m_hdop;
     private String m_gpsdatetime;
 
+
     public String getM_id() { return m_id; }
 
     public void setM_id(String p_id) { this.m_id = p_id;}

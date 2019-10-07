@@ -35,39 +35,44 @@ public class ChatActivity extends SerialActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         chatView = (ListView) findViewById(R.id.lvChatView);
-//        chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,chatlst);
-//        chatView.setAdapter(chatAdapter);
-//        chatAdapter.notifyDataSetChanged();
+        chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,chatlst);
+        chatView.setAdapter(chatAdapter);
+        chatAdapter.notifyDataSetChanged();
 
         db = new SQLiteDatabaseHandler(this);
-
-        // create some players
-        Player player1 = new Player(1, "Lebron James", "F", 203);
-        Player player2 = new Player(2, "Kevin Durant", "F", 208);
-        Player player3 = new Player(3, "Rudy Gobert", "C", 214);
-        // add them
-        db.addPlayer(player1);
-        db.addPlayer(player2);
-        db.addPlayer(player3);
-        // list all players
-        List<Player> players = db.allPlayers();
-
-        if (players != null) {
-            String[] itemsNames = new String[players.size()];
-
-            for (int i = 0; i < players.size(); i++) {
-                itemsNames[i] = players.get(i).toString();
+        List<BeaconState> beaconMessages = db.allEntries();
+        if(beaconMessages != null){
+            for(int i = 0; i<beaconMessages.size();i++){
+                chatlst.add(beaconMessages.get(i).getM_message());
             }
-
-            // display like string instances
-//            ListView list = (ListView) findViewById(R.id.lvChatView);
-//            list.setAdapter(new ArrayAdapter<String>(this,
-//            android.R.layout.simple_list_item_1, android.R.id.text1, itemsNames));
-            chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,itemsNames);
-            chatView.setAdapter(chatAdapter);
-            chatAdapter.notifyDataSetChanged();
-
         }
+        // create some players
+//        Player player1 = new Player(1, "Lebron James", "F", 203);
+//        Player player2 = new Player(2, "Kevin Durant", "F", 208);
+//        Player player3 = new Player(3, "Rudy Gobert", "C", 214);
+        // add them
+//        db.addPlayer(player1);
+//        db.addPlayer(player2);
+//        db.addPlayer(player3);
+//        // list all players
+//        List<Player> players = db.allPlayers();
+//
+//        if (players != null) {
+//            String[] itemsNames = new String[players.size()];
+//
+//            for (int i = 0; i < players.size(); i++) {
+//                itemsNames[i] = players.get(i).toString();
+//            }
+//
+//            // display like string instances
+////            ListView list = (ListView) findViewById(R.id.lvChatView);
+////            list.setAdapter(new ArrayAdapter<String>(this,
+////            android.R.layout.simple_list_item_1, android.R.id.text1, itemsNames));
+////            chatAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,itemsNames);
+////            chatView.setAdapter(chatAdapter);
+////            chatAdapter.notifyDataSetChanged();
+//
+//        }
     }
 
     @Override
@@ -81,11 +86,9 @@ public class ChatActivity extends SerialActivity {
         String msg = edtChat.getText().toString();
         if(!msg.equals("")){
             usbService.write(msg.getBytes());
-            db.addPlayer(new Player(4,msg,"F",220));
-
+            //db.addEntry(state);
             edtChat.setText("");
             CloseKeyboard();
-
         }
     }
 
@@ -93,7 +96,10 @@ public class ChatActivity extends SerialActivity {
         String BeaconData[] = data.split(";", -1);
         state.setBeaconAttributes(BeaconData);
         chatlst.add(state.getM_message());
-        db.addPlayer(new Player(4,state.getM_message(),"F",220));
+        ContentValues entry = db.convertBeaconStateToEntry(state);
+        Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
+
+        db.addEntry(entry);
         chatAdapter.notifyDataSetChanged();
     }
 

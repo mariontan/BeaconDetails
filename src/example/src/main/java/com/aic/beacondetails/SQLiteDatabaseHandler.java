@@ -12,14 +12,12 @@ import java.util.List;
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PlayersDB";
-    private static final String TABLE_NAME = "Players";
+    private static final String DATABASE_NAME = "Beaconrx";
+    private static final String TABLE_NAME = "Messages";
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_POSITION = "position";
-    private static final String KEY_HEIGHT = "height";
-    private static final String[] COLUMNS = { KEY_ID, KEY_NAME, KEY_POSITION,
-            KEY_HEIGHT };
+    private static final String KEY_NODE = "node";
+    private static final String KEY_MSG = "msg";
+    private static final String[] COLUMNS = { KEY_ID, KEY_NODE, KEY_MSG};
 
     public SQLiteDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,9 +25,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATION_TABLE = "CREATE TABLE Players ( "
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "name TEXT, "
-                + "position TEXT, " + "height INTEGER )";
+        String CREATION_TABLE = "CREATE TABLE Messages ( "
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                //+ "nodeID TEXT, "
+                + "msg TEXT) ";
 
         db.execSQL(CREATION_TABLE);
     }
@@ -93,12 +92,34 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         return players;
     }
 
-    public void addPlayer(Player player) {
+    public List<BeaconState> allEntries() {
+
+        List<BeaconState> msgs = new LinkedList<BeaconState>();
+        String query = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BeaconState state = new BeaconState();
+                //state.setM_id(cursor.getString(1));
+                state.setM_message(cursor.getString(1));
+                msgs.add(state);
+            } while (cursor.moveToNext());
+        }
+
+        return msgs;
+    }
+
+    public ContentValues convertBeaconStateToEntry(BeaconState state) {
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, player.getName());
-        values.put(KEY_POSITION, player.getPosition());
-        values.put(KEY_HEIGHT, player.getHeight());
+        //values.put(KEY_NODE, state.getM_id());
+        values.put(KEY_MSG, state.getM_message());
+        return values;
+    }
+
+    public void addEntry(ContentValues values) {
+        SQLiteDatabase db = this.getWritableDatabase();
         // insert
         db.insert(TABLE_NAME,null, values);
         db.close();
@@ -107,9 +128,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public int updatePlayer(Player player) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, player.getName());
-        values.put(KEY_POSITION, player.getPosition());
-        values.put(KEY_HEIGHT, player.getHeight());
+        values.put(KEY_NODE, player.getName());
+        values.put(KEY_MSG, player.getPosition());
 
         int i = db.update(TABLE_NAME, // table
                 values, // column/value
