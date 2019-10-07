@@ -17,6 +17,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NODE = "nodeID";
     private static final String KEY_DESTNODE = "destnodeID";
+    
     private static final String KEY_MSG = "msg";
     private static final String[] COLUMNS = { KEY_ID, KEY_NODE,KEY_DESTNODE, KEY_MSG};
 
@@ -29,8 +30,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         String CREATION_TABLE = "CREATE TABLE Messages ( "
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_NODE+" TEXT, "
-                //+ "destnodeID TEXT, "
-                + "msg TEXT) ";
+                + KEY_DESTNODE+" TEXT, "
+                + KEY_MSG+" TEXT) ";
 
         db.execSQL(CREATION_TABLE);
     }
@@ -84,8 +85,8 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
             do {
                 BeaconState state = new BeaconState();
                 state.setM_id(cursor.getString(1));
-                //state.setM_destid(cursor.getString(2));
-                state.setM_message(cursor.getString(2));
+                state.setM_destid(cursor.getString(2));
+                state.setM_message(cursor.getString(3));
                 msgs.add(state);
             } while (cursor.moveToNext());
         }
@@ -96,7 +97,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     public ContentValues convertBeaconStateToEntry(BeaconState state) {
         ContentValues values = new ContentValues();
         values.put(KEY_NODE, state.getM_id());
-        //values.put(KEY_DESTNODE,state.getM_destid());
+        values.put(KEY_DESTNODE,state.getM_destid());
         values.put(KEY_MSG, state.getM_message());
         return values;
     }
