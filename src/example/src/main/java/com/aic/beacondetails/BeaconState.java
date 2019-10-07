@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 public class BeaconState {
     private String m_id;
+    private String m_destid;
     private String m_name;
     private int m_age;
     private String m_gender;
@@ -23,6 +24,10 @@ public class BeaconState {
     public String getM_id() { return m_id; }
 
     public void setM_id(String p_id) { this.m_id = p_id;}
+
+    public String getM_destid() {return m_destid;}
+
+    public void setM_destid(String m_destid) {this.m_destid = m_destid;}
 
     public String getM_name() { return m_name; }
 
@@ -108,6 +113,11 @@ public class BeaconState {
 
     public void setM_gpsDateTime(String p_gpsdatetime){this.m_gpsdatetime = p_gpsdatetime;}
 
+    @Override
+    public String toString() {
+        return getM_id() + "]:"+getM_destid()+ "]:" + getM_message();
+    }
+
     public void setBeaconAttributes(String[] BeaconData){
         setM_gpsDateTime(BeaconData[0]);
         setM_latitude(Float.parseFloat(BeaconData[1]));
@@ -117,6 +127,9 @@ public class BeaconState {
         setM_message(BeaconData[5]);
         setM_quality(Integer.parseInt(BeaconData[6]));
         setM_fix(Integer.parseInt(BeaconData[7]));
+        setM_destid(BeaconData[8]);
+        setM_id(BeaconData[9]);
+
 
     }
         public void SetBeaconID(SharedPreferences sharedpref, Context context){

@@ -43,7 +43,7 @@ public class ChatActivity extends SerialActivity {
         List<BeaconState> beaconMessages = db.allEntries();
         if(beaconMessages != null){
             for(int i = 0; i<beaconMessages.size();i++){
-                chatlst.add(beaconMessages.get(i).getM_message());
+                chatlst.add(beaconMessages.get(i).toString());
             }
         }
         // create some players
@@ -94,9 +94,9 @@ public class ChatActivity extends SerialActivity {
     public void processMessage(String data) {
         String BeaconData[] = data.split(";", -1);
         state.setBeaconAttributes(BeaconData);
-        chatlst.add(state.getM_message());
+        chatlst.add(state.toString());
         ContentValues entry = db.convertBeaconStateToEntry(state);
-        //Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "State message: ["+entry.toString()+"]", Toast.LENGTH_SHORT).show();
 
         db.addEntry(entry);
         chatAdapter.notifyDataSetChanged();
