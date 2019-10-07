@@ -17,9 +17,18 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NODE = "nodeID";
     private static final String KEY_DESTNODE = "destnodeID";
-    
+    private static final String KEY_DATE = "date";
+    private static final String KEY_LAT = "lat";
+    private static final String KEY_LON ="lon";
+    private static final String KEY_ALT ="alt";
+    private static final String KEY_HDOP="hdop";
+    private static final String KEY_QUAL="qual";
+    private static final String KEY_FIX="fix";
+    //private static final String KEY_
     private static final String KEY_MSG = "msg";
-    private static final String[] COLUMNS = { KEY_ID, KEY_NODE,KEY_DESTNODE, KEY_MSG};
+    private static final String[] COLUMNS = { KEY_ID, KEY_NODE,KEY_DESTNODE,KEY_DATE,
+                                                KEY_LAT,KEY_LON,KEY_ALT,KEY_HDOP,
+                                                KEY_QUAL,KEY_FIX,KEY_MSG};
 
     public SQLiteDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,6 +40,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_NODE+" TEXT, "
                 + KEY_DESTNODE+" TEXT, "
+                + KEY_DATE+" TEXT, "
+                + KEY_LAT+" TEXT, "
+                + KEY_LON+" TEXT, "
+                + KEY_ALT+" TEXT, "
+                + KEY_HDOP+" TEXT, "
+                + KEY_QUAL+" TEXT, "
+                + KEY_FIX+" TEXT, "
                 + KEY_MSG+" TEXT) ";
 
         db.execSQL(CREATION_TABLE);
@@ -86,7 +102,14 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
                 BeaconState state = new BeaconState();
                 state.setM_id(cursor.getString(1));
                 state.setM_destid(cursor.getString(2));
-                state.setM_message(cursor.getString(3));
+                state.setM_gpsDateTime(cursor.getString(3));
+                state.setM_latitude(cursor.getFloat(4));
+                state.setM_longitude(cursor.getFloat(5));
+                state.setM_altitude(cursor.getFloat(6));
+                state.setM_hdop(cursor.getFloat(7));
+                state.setM_quality(cursor.getInt(8));
+                state.setM_fix(cursor.getInt(9));
+                state.setM_message(cursor.getString(10));
                 msgs.add(state);
             } while (cursor.moveToNext());
         }
@@ -98,6 +121,13 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NODE, state.getM_id());
         values.put(KEY_DESTNODE,state.getM_destid());
+        values.put(KEY_DATE,state.getM_gpsDate());
+        values.put(KEY_LAT,state.getM_latitude());
+        values.put(KEY_LON,state.getM_longitude());
+        values.put(KEY_ALT,state.getM_altitude());
+        values.put(KEY_HDOP,state.getM_hdop());
+        values.put(KEY_QUAL,state.getM_quality());
+        values.put(KEY_FIX,state.getM_fix());
         values.put(KEY_MSG, state.getM_message());
         return values;
     }
