@@ -3,8 +3,10 @@ package com.aic.beacondetails;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class BeaconState {
-    private String m_id;
+import java.io.Serializable;
+
+public class BeaconState implements Serializable {
+    private String m_id ="";
     private String m_destid;
     private String m_name;
     private int m_age;
@@ -20,7 +22,9 @@ public class BeaconState {
     private float m_hdop;
     private String m_gpsdatetime;
 
+    public BeaconState(){
 
+    }
     public String getM_id() { return m_id; }
 
     public void setM_id(String p_id) { this.m_id = p_id;}

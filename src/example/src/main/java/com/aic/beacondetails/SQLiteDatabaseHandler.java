@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.LinkedList;
 import java.util.List;
-
+//taken from https://medium.com/@ssaurel/learn-to-save-data-with-sqlite-on-android-b11a8f7718d3
 public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -24,7 +24,6 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_HDOP="hdop";
     private static final String KEY_QUAL="qual";
     private static final String KEY_FIX="fix";
-    //private static final String KEY_
     private static final String KEY_MSG = "msg";
     private static final String[] COLUMNS = { KEY_ID, KEY_NODE,KEY_DESTNODE,KEY_DATE,
                                                 KEY_LAT,KEY_LON,KEY_ALT,KEY_HDOP,
