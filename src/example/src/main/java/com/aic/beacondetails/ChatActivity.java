@@ -52,13 +52,13 @@ public class ChatActivity extends SerialActivity {
         chatView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(ChatActivity.this, beaconMessages.get(position).getM_destid(), Toast.LENGTH_SHORT).show();
-                //passing objects https://zocada.com/using-intents-extras-pass-data-activities-android-beginners-guide/
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("MSG",beaconMessages.get(position));
-                Intent intent = new Intent(ChatActivity.this,MsgDetailsActivity.class).putExtras(bundle);
-                startActivity(intent);
-                finish();
+            //Toast.makeText(ChatActivity.this, beaconMessages.get(position).getM_destid(), Toast.LENGTH_SHORT).show();
+            //passing objects https://zocada.com/using-intents-extras-pass-data-activities-android-beginners-guide/
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("MSG",beaconMessages.get(position));
+            Intent intent = new Intent(ChatActivity.this,MsgDetailsActivity.class).putExtras(bundle);
+            startActivity(intent);
+            finish();
             }
         });
     }
@@ -68,7 +68,12 @@ public class ChatActivity extends SerialActivity {
         super.onResume();
         chatAdapter.notifyDataSetChanged();
     }
-
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(ChatActivity.this,USER_info.class);
+        startActivity(intent);
+        finish();
+    }
     public void send (View v){
         edtChat = (EditText) findViewById(R.id.edtChat);
         String msg = state.getM_id()+":"+edtChat.getText().toString();

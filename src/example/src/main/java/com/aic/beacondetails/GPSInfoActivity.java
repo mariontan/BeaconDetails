@@ -1,5 +1,6 @@
 package com.aic.beacondetails;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -64,6 +65,12 @@ public class GPSInfoActivity extends SerialActivity {
         String BeaconData[] = data.split(";",-1);
         state.setBeaconAttributes(BeaconData);
         showBeaconData(beaconView, state);
+    }
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(GPSInfoActivity.this,USER_info.class);
+        startActivity(intent);
+        finish();
     }
     private void showBeaconData(BeaconView view, BeaconState data){
 

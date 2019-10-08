@@ -34,6 +34,7 @@ public class USER_info extends AppCompatActivity {
     public void readSerial(View v){
         Intent intent = new Intent(USER_info.this, GPSInfoActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void save(View v) {
@@ -54,10 +55,12 @@ public class USER_info extends AppCompatActivity {
     public void emergency(View v) {
         Intent intent = new Intent(USER_info.this, EmergencyButton.class);
         startActivity(intent);
+        finish();
     }
     public void chat(View v){
         Intent intent = new Intent(USER_info.this,ChatActivity.class);
         startActivity(intent);
+        finish();
     }
     @Override
     public void onResume() {
