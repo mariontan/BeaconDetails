@@ -39,6 +39,7 @@ public class EmergencyButton extends SerialActivity {
     public void read(View V){
         Intent intent = new Intent(EmergencyButton.this, GPSInfoActivity.class);
         startActivity(intent);
+        finish();
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,11 @@ public class EmergencyButton extends SerialActivity {
         eButton(R.id.btn5,R.string.s_btn5,sharedpref);
         eButton(R.id.btn6,R.string.s_btn6,sharedpref);
     }
-
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(EmergencyButton.this, USER_info.class);
+        startActivity(intent);
+        finish();
+    }
 
 }

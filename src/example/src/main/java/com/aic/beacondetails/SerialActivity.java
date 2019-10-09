@@ -131,7 +131,7 @@ public abstract class SerialActivity extends AppCompatActivity {
                     msg.what + ":" + toastMsg,
                     Toast.LENGTH_SHORT);
 
-            toast.show();
+            //toast.show();
         }
     }
 }

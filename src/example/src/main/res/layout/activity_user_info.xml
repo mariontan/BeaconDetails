@@ -120,7 +120,13 @@
         android:layout_below="@+id/btnEmergency"
         android:text="Chat"
         android:onClick="chat"/>
-
+    <Button
+        android:id="@+id/btnExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnChat"
+        android:text="Export DB"
+        android:onClick="export"/>
 
 
 </RelativeLayout>

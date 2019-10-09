@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MsgDetailsActivity">
+    <TextView
+        android:id="@+id/textViewLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="no GPS Lock"
+        android:textColor="#c90000"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+        android:id="@+id/textViewRecent"
+        android:layout_below="@+id/textViewLock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="Recent: "
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewRecentMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textViewRecent"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_below="@+id/textViewRecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewDateTime"
+        android:text="Date &amp;Time : "
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewDateTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewRecentMsg"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewDate"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewLatitude"
+        android:layout_below="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewLat"
+        android:text="Lat: "
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewLat"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewDateTime"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewLongitude"
+        android:layout_below="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewLon"
+        android:text="Lon: "
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/textViewLon"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewLatitude"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewAltitude"
+        android:layout_below="@+id/textViewLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewAlt"
+        android:text="Alt: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewAlt"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewLon"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewHDOP"
+        android:layout_below="@+id/textViewAltitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewHdop"
+        android:text="Hdop: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewHdop"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewAlt"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFIXQ"
+        android:layout_below="@+id/textViewHDOP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewFixq"
+        android:text="Fixq: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFixq"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewHdop"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFIX"
+        android:layout_below="@+id/textViewFIXQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/textViewFix"
+        android:text="Fix: "
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/textViewFix"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/textViewFixq"
+        android:layout_alignLeft="@+id/textViewDateTime"
+        android:padding="0dp"
+        android:textSize="18sp"/>
+
+</RelativeLayout>
