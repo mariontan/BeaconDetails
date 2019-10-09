@@ -5,7 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.LinkedList;
 import java.util.List;
 //taken from https://medium.com/@ssaurel/learn-to-save-data-with-sqlite-on-android-b11a8f7718d3
@@ -31,6 +38,10 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
     public SQLiteDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static String getTableName() {
+        return TABLE_NAME;
     }
 
     @Override
@@ -153,5 +164,7 @@ public class SQLiteDatabaseHandler extends SQLiteOpenHelper {
 
         return i;
     }
+
+
 
 }

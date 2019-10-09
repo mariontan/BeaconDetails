@@ -3,6 +3,9 @@ package com.aic.beacondetails;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileWriter;
 
 public class USER_info extends AppCompatActivity {
     EditText etBD,etName, etAge, etGender;
@@ -62,6 +68,9 @@ public class USER_info extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    public void export(View v){
+        exportDB();
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -77,6 +86,41 @@ public class USER_info extends AppCompatActivity {
         }
         if (sp.contains(getString(R.string.gender))) {
             etGender.setText(sp.getString(getString(R.string.gender), ""));
+        }
+    }
+    private void exportDB() {
+
+        SQLiteDatabaseHandler dbhelper = new SQLiteDatabaseHandler(getApplicationContext());
+        File exportDir = new File(Environment.getExternalStorageDirectory(), "");
+        if (!exportDir.exists())
+        {
+            exportDir.mkdirs();
+        }
+
+        File file = new File(exportDir, "beacondata.csv");
+        try
+        {
+            file.createNewFile();
+            CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
+            SQLiteDatabase db = dbhelper.getReadableDatabase();
+            Cursor curCSV = db.rawQuery("SELECT * FROM Messages",null);
+            csvWrite.writeNext(curCSV.getColumnNames());
+            while(curCSV.moveToNext())
+            {
+                //Which column you want to exprort
+                String arrStr[] ={curCSV.getString(0),curCSV.getString(1), curCSV.getString(2),
+                        curCSV.getString(3),curCSV.getString(4), curCSV.getString(5),
+                        curCSV.getString(6),curCSV.getString(7), curCSV.getString(8),
+                        curCSV.getString(9),curCSV.getString(10)};
+                csvWrite.writeNext(arrStr);
+            }
+            csvWrite.close();
+            curCSV.close();
+            Toast.makeText(USER_info.this, "File exported to:"+exportDir.toString(),Toast.LENGTH_LONG).show();
+        }
+        catch(Exception sqlEx)
+        {
+            Log.e("MainActivity", sqlEx.getMessage(), sqlEx);
         }
     }
 
