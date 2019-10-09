@@ -103,7 +103,7 @@ public class USER_info extends AppCompatActivity {
             file.createNewFile();
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             SQLiteDatabase db = dbhelper.getReadableDatabase();
-            Cursor curCSV = db.rawQuery("SELECT * FROM Messages",null);
+            Cursor curCSV = db.rawQuery("SELECT * FROM "+dbhelper.getTableName(),null);
             csvWrite.writeNext(curCSV.getColumnNames());
             while(curCSV.moveToNext())
             {
